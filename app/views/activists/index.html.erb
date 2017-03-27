@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Activists</h1>
+
+<p>
+  Download:
+  <%= link_to 'CSV', activists_path(format: 'csv') %>
+  <%= link_to 'Excel', activists_path(format: 'xls') %>
+</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Correo</th>
+      <th>Sección</th>
+      <th>Frentes</th>
+      <th>Voto</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @activists.each do |activist| %>
+      <tr>
+        <td><%= activist.name %></td>
+        <td><%= activist.email %></td>
+        <td><%= activist.section.name %></td>
+        <td><%= activist.fronts.map{|d| d.name}.join(' / ') %></td>
+        <td><%= activist.voted? ? 'Si' : 'No' %></td>
+        <td><%= link_to send_mail_activists_path(activist) do %>
+        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+        <% end %>
+        </td>
+        <td><%= link_to activist do %>
+        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+        <% end %>
+        </td>
+        <td><%= link_to edit_activist_path(activist) do %>
+        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+        <% end %>
+        </td>
+        <td><%= link_to activist, method: :delete, data: { confirm: 'Are you sure?' } do %>
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<br>
+<%= link_to 'Import Activists', activist_imports_new_path %>
+<br>
+<%= link_to 'New Activist', new_activist_path %>

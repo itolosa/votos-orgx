@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">Name</Data></Cell>
+        <Cell><Data ss:Type="String">Email</Data></Cell>
+        <Cell><Data ss:Type="String">Section</Data></Cell>
+        <Cell><Data ss:Type="String">Fronts</Data></Cell>
+        <Cell><Data ss:Type="String">Voted</Data></Cell>
+        <Cell><Data ss:Type="String">Link</Data></Cell>
+      </Row>
+    <% @activists.each do |activist| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= activist.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.email %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.section.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.fronts.map{|d| d.name}.join(' / ') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.voted? ? 'Yes' : 'No' %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= login_from_token_activists_url(token: activist.token) %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

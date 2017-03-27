@@ -1,0 +1,57 @@
+<%= form_for @vote, url: {action: "confirm"} do |f| %>
+  <% if @vote.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vote.errors.count, "error") %> prohibited this vote from being saved:</h2>
+
+      <ul>
+      <% @vote.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  
+
+  <div class="col-sm-6 col-sm-offset-3">
+    
+    <h1 class="text-center">Votaciones para elección de miembros de la Comisión Política</h1>
+    <h6 class="text-center">si no marca ningún candidato, su voto se considerará como blanco.</h6>
+  </div>
+
+  <% flash.each do |name, msg| -%>
+    <div class="col-sm-12 text-center">
+      <%= content_tag :h5, msg, :class=> 'name red' %>    
+    </div>      
+  <% end -%>
+  <div class= "col-sm-8 col-sm-offset-2">
+    <div class="table-responsive">
+      <table class="table table-hover table-striped">
+        <thead>
+          <th>Nombre</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <%= f.collection_check_boxes(:candidate_ids, @candidates, :id, :name) do |candidate| %>
+          <tr>
+            <td>
+              <%= candidate.object.name %>
+
+              <%= link_to "/presentations/#{candidate.object.presentation_filename}" do %>
+                <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+              <% end %>
+            </td>
+            <td><%= candidate.check_box %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    
+  </div>
+
+  <div class="actions col-sm-2 col-sm-offset-5 text-center down">
+    <%= f.submit "Vota", :class=>'btn btn-lg btn-block btn-success' %>
+  </div>
+<% end %>

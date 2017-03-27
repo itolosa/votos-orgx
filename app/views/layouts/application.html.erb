@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VotosOrgX</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <% if current_activist and current_activist.has_role?(:admin) %>
+    <nav class="navbar navbar-inverse  navbar-static-top">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="nav-item">
+            <%= link_to 'Home', root_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Activists', activists_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Candidates', candidates_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Sections', sections_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Fronts', fronts_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Votes', votes_path, class: "nav-link" %>
+          </li>
+        </ul>
+        <p class="navbar-text navbar-right">
+      		Bienvenido <%= current_activist.name %> | Admin: <%= current_activist.has_role?(:admin) ? 'Si' : 'No' %> | 
+          <%= link_to('Logout', destroy_activist_session_path, method: :delete) %> | <%= link_to "Token Login", login_from_token_activists_path(token: current_activist.token) %>
+        </p>
+      </div>
+    </nav>
+  <% end %>
+  <div class="container-fluid">
+    <div id="main-container" class="container">
+      <%= yield %>
+    </div>
+  </div>
+</body>
+</html>

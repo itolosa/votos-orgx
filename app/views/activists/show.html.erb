@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Nombre: </strong>
+  <%= @activist.name %>
+</p>
+<p>
+  <strong>Email: </strong>
+  <%= @activist.email %>
+</p>
+<p>
+  <strong>Ha votado: </strong>
+  <%= @activist.voted? ? "Si" : "No" %>
+</p>
+<p>
+  <strong>Sección: </strong>
+  <%= @activist.name %>
+</p>
+<p>
+  <strong>Frente: </strong>
+  <%= @activist.fronts.map{|d| d.name}.join(' / ') %>
+</p>
+
+<%= link_to 'Edit', edit_activist_path(@activist) %> |
+<%= link_to 'Back', activists_path %>

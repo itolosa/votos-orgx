@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+  	<div>
+
+  		<table style="width:100%">
+  			<tr>
+  				<td width="100"><img src="" alt="" style="width:83%"></td>
+  				<td><h2 style="color: black">Movimiento X Chile</h2></td>
+  			</tr>
+  		</table>
+  		<h3>Hola <%= @activist.name %></h3>
+	    <p>
+	      Si has recibido este correo, es porque estás dentro del padrón para poder votar ...
+      </p>
+
+		   <h3>Una vez leídas las instrucciones haz click en el siguiente link para efectuar el voto: </h3>
+		   <%= link_to "Click Acá", login_from_token_activists_url(token: @activist.token) %>
+	    </p>
+  	</div>
+    
+  </body>
+</html>

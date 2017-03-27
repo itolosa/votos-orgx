@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Fronts</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Votos</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @fronts.each do |front| %>
+      <tr>
+        <td><%= front.name %></td>
+        <td><%= "#{front.show_vote_ratio} (#{front.vote_percent}%)" %></td>
+        <td><%= link_to 'Show', front %></td>
+        <td><%= link_to 'Edit', edit_front_path(front) %></td>
+        <td><%= link_to 'Destroy', front, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Front', new_front_path %>

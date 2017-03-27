@@ -1,0 +1,2 @@
+module ActivistsHelper
+end

@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Votes</h1>
+
+<p>
+  Download:
+  <%= link_to 'Excel', votes_path(format: 'xls') %>
+</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>id #</th>
+      <th>Sección</th>
+      <% Candidate.all.order(:name).each do |candidate| %>
+        <th><%= candidate.name.split.last %></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @votes.each do |vote| %>
+      <tr>
+        <td><%= vote.id %></td>
+        <td><%= vote.activist.section.name %></td>
+        <% Candidate.all.order(:name).each do |candidate| %>
+          <td>
+            <% if vote.candidates.include?(candidate) %>
+              <span class="glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <% else %>
+              <span class="glyphicon glyphicon glyphicon-minus" aria-hidden="true"></span>
+            <% end %>
+          </td>
+        <% end %>
+        <td><%= link_to 'Show', vote %></td>
+        <td><%= link_to 'Edit', edit_vote_path(vote) %></td>
+        <td><%= link_to 'Destroy', vote, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
+<%= link_to 'New Vote', new_vote_path %>

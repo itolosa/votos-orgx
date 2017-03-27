@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">ID</Data></Cell>
+        <Cell><Data ss:Type="String">Name</Data></Cell>
+        <Cell><Data ss:Type="String">Email</Data></Cell>
+        <Cell><Data ss:Type="String">Section</Data></Cell>
+        <Cell><Data ss:Type="String">Fronts</Data></Cell>
+        <Cell><Data ss:Type="String">Voted</Data></Cell>
+        <% Candidate.all.order(:name).each do |candidate| %>
+          <Cell><Data ss:Type="String">Option: <%= candidate.name %></Data></Cell>
+        <% end %>
+      </Row>
+    <% Activist.all.each do |activist| %>
+      <Row>
+        <Cell><Data ss:Type="Number"><%= activist.id %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.email %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.section.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.fronts.map{|d| d.name}.join(' / ') %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= activist.voted? ? 'Yes' : 'No' %></Data></Cell>
+        <% Candidate.all.order(:name).each do |candidate| %>
+          <% if activist.voted? %>
+            <Cell><Data ss:Type="Number"><%= activist.vote.candidates.include?(candidate) ? 1 : 0 %></Data></Cell>
+          <% else %>
+            <Cell><Data ss:Type="Number">0</Data></Cell>
+          <% end %>
+        <% end %>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>
